@@ -86,21 +86,55 @@ body::before {
   );
 }
 
-/* distant island silhouette right side */
-.intro-island {
-  position: absolute;
-  bottom: 20%;
-  right: 8%;
-  width: 180px;
-  opacity: 0;
-  animation: islandAppear 1.8s ease 3.5s forwards;
-}
-@keyframes islandAppear {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
 
-/* sea / wave area */
+/* intro text */
+.intro-text-block {
+  position: absolute;
+  bottom: 28%;
+  left: 0; right: 0;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp2 1.2s ease 1.2s forwards;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes fadeUp2 {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.intro-title {
+  font-family: 'Hahmlet', serif;
+  font-size: clamp(22px, 4vw, 42px);
+  font-weight: 300;
+  color: var(--sea-deep);
+  letter-spacing: 0.35em;
+  line-height: 1.3;
+  text-shadow: 0 2px 20px rgba(255,255,255,0.6);
+  display: block;
+  text-align: center;
+}
+.intro-dots span {
+  opacity: 0;
+  animation: dotAppear 0.4s ease forwards;
+}
+.intro-dots span:nth-child(1) { animation-delay: 1.6s; }
+.intro-dots span:nth-child(2) { animation-delay: 2.0s; }
+.intro-dots span:nth-child(3) { animation-delay: 2.4s; }
+@keyframes dotAppear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.intro-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(10px, 1.2vw, 13px);
+  letter-spacing: 0.55em;
+  color: var(--sea-m);
+  margin-top: 14px;
+  opacity: 0;
+  animation: fadeUp2 1s ease 2.9s forwards;
+  text-align: center;
+  display: block;
+}
 .intro-sea {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -122,16 +156,17 @@ body::before {
   50%       { transform: translateX(-4%) scaleY(1.08); }
 }
 
-/* boat wrapper: horizontal + bob */
+/* boat wrapper: horizontal + bob + fade out at the end */
 .boat-wrap {
   position: absolute;
   bottom: 20.5%;
   left: -120px;
-  animation: boatSail 6s cubic-bezier(0.4, 0, 0.4, 1) 0.5s forwards;
+  animation: boatSail 4s cubic-bezier(0.25, 0, 0.6, 1) 0.3s forwards;
 }
 @keyframes boatSail {
-  0%   { left: -120px; }
-  100% { left: calc(100% - 60px); }
+  0%   { left: -120px; opacity: 1; }
+  70%  { opacity: 1; }
+  100% { left: calc(100% + 40px); opacity: 0; }
 }
 
 .boat-bob {
@@ -150,28 +185,44 @@ body::before {
   transform: translateX(-50%);
   text-align: center;
   opacity: 0;
-  animation: fadeUp 1.2s ease 1.5s forwards;
+  animation: fadeUp 1.2s ease 1.2s forwards;
   z-index: 2;
   pointer-events: none;
   white-space: nowrap;
 }
 .intro-title {
   font-family: 'Hahmlet', serif;
-  font-size: clamp(28px, 5vw, 52px);
+  font-size: clamp(22px, 4vw, 42px);
   font-weight: 300;
   color: var(--sea-deep);
   letter-spacing: 0.35em;
   line-height: 1.3;
   text-shadow: 0 2px 20px rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.intro-dots span {
+  opacity: 0;
+  animation: dotAppear 0.4s ease forwards;
+}
+.intro-dots span:nth-child(1) { animation-delay: 1.6s; }
+.intro-dots span:nth-child(2) { animation-delay: 2.0s; }
+.intro-dots span:nth-child(3) { animation-delay: 2.4s; }
+@keyframes dotAppear {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 .intro-sub {
   font-family: 'IBM Plex Mono', monospace;
   font-size: clamp(10px, 1.2vw, 13px);
-  letter-spacing: 0.5em;
+  letter-spacing: 0.55em;
   color: var(--sea-m);
-  margin-top: 10px;
+  margin-top: 14px;
   opacity: 0;
-  animation: fadeUp 1s ease 2.4s forwards;
+  animation: fadeUp 1s ease 2.9s forwards;
+  text-align: center;
 }
 .intro-hint {
   position: absolute;
@@ -796,7 +847,6 @@ body::before {
   transition: transform 0.5s;
 }
 .npc-card:hover .npc-photo img { transform: scale(1.05); }
-.npc-photo-ph {
   width: 100%; height: 100%;
   min-height: 160px;
   display: flex;
@@ -924,17 +974,18 @@ body::before {
 }
 .char-table td:last-child strong { color: var(--sea-deep); font-weight: 700; }
 
-.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .chip {
-  padding: 3px 10px;
+  padding: 5px 13px;
   border: 1px solid var(--line);
   background: var(--foam);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--body);
 }
-.chip.sea { border-color: var(--sea-l); color: var(--sea-m); }
+.chip.sea { border-color: var(--sea-m); color: var(--sea-d); background: rgba(157,200,216,0.12); }
 
 .char-fear {
   background: linear-gradient(135deg, var(--foam) 0%, rgba(157,200,216,0.1) 100%);
@@ -1103,11 +1154,11 @@ body::before {
 }
 .user-input-toggle:hover { background: var(--sky); }
 .user-input-toggle-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  color: var(--sea-m);
-  text-transform: uppercase;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--sea-d);
 }
 .toggle-caret { font-size: 10px; color: var(--muted); transition: transform 0.3s; }
 .user-input-toggle.open .toggle-caret { transform: rotate(180deg); }
@@ -1122,7 +1173,7 @@ body::before {
 .user-input-content.open { display: block; }
 .ui-text {
   font-family: 'Gowun Batang', serif;
-  font-size: 14.5px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 2.3;
   color: var(--body);
@@ -1267,18 +1318,6 @@ footer {
 <div id="intro">
   <div class="intro-sky"></div>
 
-  <!-- 섬 실루엣 -->
-  <svg class="intro-island" viewBox="0 0 180 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- 산 실루엣 -->
-    <path d="M0,100 L0,65 Q20,30 40,45 Q55,15 75,40 Q95,10 115,35 Q130,20 155,45 L180,42 L180,100 Z" fill="#4a8870" opacity="0.5"/>
-    <path d="M0,100 L0,72 Q15,55 35,62 Q50,45 70,58 Q90,40 110,55 Q125,42 150,58 L180,55 L180,100 Z" fill="#5a9878" opacity="0.6"/>
-    <!-- 복숭아꽃 점들 -->
-    <circle cx="60" cy="40" r="2" fill="#e8a0a0" opacity="0.7"/>
-    <circle cx="75" cy="34" r="1.5" fill="#e8a0a0" opacity="0.6"/>
-    <circle cx="95" cy="42" r="2" fill="#e8a0a0" opacity="0.5"/>
-    <circle cx="108" cy="36" r="1.5" fill="#f0b0b0" opacity="0.6"/>
-  </svg>
-
   <!-- 파도들 -->
   <div class="intro-sea">
     <svg class="wave wave1" viewBox="0 0 1440 60" preserveAspectRatio="none">
@@ -1319,8 +1358,7 @@ footer {
 
   <!-- 텍스트 -->
   <div class="intro-text-block">
-    <div class="intro-title">도화도</div>
-    <div class="intro-sub">D-30 · 강태오</div>
+    <div class="intro-title">도화도로 가는 길<span class="intro-dots"><span>.</span><span>.</span><span>.</span></span></div>
   </div>
 
   <div class="intro-hint">— 클릭하여 입장 —</div>
@@ -1374,7 +1412,7 @@ footer {
         </div>
       </div>
       <div class="hero-cta">
-        <a href="#" class="play-btn">
+        <a href="https://rofan.ai/character/5eb790b8-20b1-45bf-a8b8-eb282f3ec514" target="_blank" class="play-btn">
           플레이하기
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -1383,10 +1421,7 @@ footer {
     <div class="hero-photo-col">
       <div class="hero-photo-frame">
         <!-- 히어로 전신 사진 -->
-        <div class="photo-placeholder">
-          <span>>여기에 사진 삽입<<br>강태오 / 전신</span>
-          <span class="ph-kr">강태오</span>
-        </div>
+        <img src="https://i.postimg.cc/jjS36k05/강태오1.png" alt="강태오 전신">
       </div>
     </div>
   </section>
@@ -1435,9 +1470,7 @@ footer {
         <div>
           <!-- 도화도 풍경 사진 -->
           <div class="world-aside-photo">
-            <div class="world-aside-photo-placeholder">
-              <span>>여기에 사진 삽입<<br>도화도 풍경</span>
-            </div>
+            <img src="https://i.postimg.cc/Rh6TsjXt/도화도.png" alt="도화도 풍경" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
           </div>
           <p class="aside-cap">도화도 · 전라남도</p>
         </div>
@@ -1523,9 +1556,7 @@ footer {
         <!-- 강만수 -->
         <div class="npc-card">
           <div class="npc-photo">
-            <div class="npc-photo-ph">
-              <span>>여기에 사진 삽입<<br>강만수</span>
-            </div>
+            <img src="https://i.postimg.cc/9M8htqnq/강만수.png" alt="강만수">
           </div>
           <div class="npc-body">
             <div class="npc-role-tag">태오 부친</div>
@@ -1538,9 +1569,7 @@ footer {
         <!-- 박순이 -->
         <div class="npc-card">
           <div class="npc-photo">
-            <div class="npc-photo-ph">
-              <span>>여기에 사진 삽입<<br>박순이</span>
-            </div>
+            <img src="https://i.postimg.cc/Sx5K63Hf/bagsun-i2.png" alt="박순이">
           </div>
           <div class="npc-body">
             <div class="npc-role-tag">태오 모친</div>
@@ -1553,9 +1582,7 @@ footer {
         <!-- 허재만 -->
         <div class="npc-card">
           <div class="npc-photo">
-            <div class="npc-photo-ph">
-              <span>>여기에 사진 삽입<<br>허재만 이장님</span>
-            </div>
+            <img src="https://i.postimg.cc/rF68h5py/허재만.png" alt="허재만">
           </div>
           <div class="npc-body">
             <div class="npc-role-tag">도화도 이장</div>
@@ -1589,7 +1616,7 @@ footer {
         <div>
           <div class="char-literary-quote">
             "오직 두 가지만이 무한하다 — 우주와 인간의 어리석음. 그리고 나는 우주에 대해서는 확신이 없다."
-            <cite>— Albert Einstein (공개 발언 · 저작권 무관)</cite>
+            <cite>— Albert Einstein</cite>
           </div>
 
           <table class="char-table">
@@ -1660,7 +1687,7 @@ footer {
             <p>섬마을에서 태어나 한 번도 육지로 나가 살아본 적 없는 토박이. 부모님을 도와 농사와 뱃일을 하며 성실하게 살아옴. 좁은 마을이라 모든 집 숟가락 개수까지 알 정도로 이웃들과 가깝게 지냄.</p>
           </div>
 
-          <a href="#" class="play-btn">
+          <a href="https://rofan.ai/character/5eb790b8-20b1-45bf-a8b8-eb282f3ec514" target="_blank" class="play-btn">
             플레이하기
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
@@ -1669,21 +1696,14 @@ footer {
         <!-- 사진 -->
         <div class="char-photo-col">
           <div class="char-main-photo">
-            <!-- 메인 사진 -->
-            <div class="char-photo-placeholder">
-              <span>>여기에 사진 삽입<<br>강태오 메인</span>
-            </div>
+            <img src="https://i.postimg.cc/DwZ1xV0f/강태오2.png" alt="강태오 메인">
           </div>
           <div class="char-photo-secondary">
             <div class="char-photo-sm">
-              <div class="char-photo-sm-ph">
-                <span>>사진 삽입<<br>서브 1</span>
-              </div>
+              <img src="https://i.postimg.cc/Cx92Hs7d/강태오_11.png" alt="강태오 서브1">
             </div>
             <div class="char-photo-sm">
-              <div class="char-photo-sm-ph">
-                <span>>사진 삽입<<br>서브 2</span>
-              </div>
+              <img src="https://i.postimg.cc/qvgfGRdj/강태오_10.png" alt="강태오 서브2">
             </div>
           </div>
           <div class="photo-caption">강태오 · 도화도 · 24세 · D-30</div>
@@ -1717,7 +1737,7 @@ footer {
         </button>
         <div class="user-input-content" id="userInputContent">
           <div class="ui-text">
-            <strong>"......넌 나한테 할 얘기 그것밖에 없냐."</strong><br><br>
+            <strong>"......넌 나한테 할 얘기 그것밖에 없냐."</strong><br>
             <em>유저가 나지막이 물었다.</em>
           </div>
         </div>
